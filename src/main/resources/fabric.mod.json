@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "biomechanica",
+  "version": "${version}",
+  "name": "Biomechanica",
+  "description": "Biomechanics takes over the world. Will you become one with the machines, ",
+  "authors": [
+    "Overcontrol1"
+  ],
+  "contact": {
+    "repo": "https://github.com/those/Biomechanica"
+  },
+  "license": "All-Rights-Reserved",
+  "icon": "assets/biomechanica/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "com.overcontrol1.biomechanica.client.BiomechanicaClient"
+    ],
+    "main": [
+      "com.overcontrol1.biomechanica.Biomechanica"
+    ]
+  },
+  "mixins": [
+    "biomechanica.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
