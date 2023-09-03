@@ -2,7 +2,6 @@ package com.overcontrol1.biomechanica.registry;
 
 import com.overcontrol1.biomechanica.Biomechanica;
 import net.minecraft.entity.damage.DamageType;
-import net.minecraft.registry.Registerable;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
