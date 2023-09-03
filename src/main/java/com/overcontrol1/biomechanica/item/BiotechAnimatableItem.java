@@ -3,7 +3,6 @@ package com.overcontrol1.biomechanica.item;
 import com.overcontrol1.biomechanica.biotech.Biotech;
 import com.overcontrol1.biomechanica.client.animation.CustomDataTickets;
 import com.overcontrol1.biomechanica.client.renderer.BiotechRenderer;
-import com.overcontrol1.biomechanica.registry.BiotechRegistry;
 import com.overcontrol1.biomechanica.registry.custom.CustomRegistries;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.TooltipContext;
@@ -27,7 +26,9 @@ import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -75,8 +76,11 @@ public class BiotechAnimatableItem extends ArmorItem implements GeoItem {
             if (client.player != null) {
                 // ANIMATIONS HERE
                 Biotech currentTech = state.getData(CustomDataTickets.BIOTECH);
-                if (currentTech == BiotechRegistry.BACK_CLAW) {
-                    state.setAnimation(RawAnimation.begin().then("animation.back_claw.equip", Animation.LoopType.LOOP));
+                String path = Objects.requireNonNull(CustomRegistries.BIOTECH.getId(currentTech)).getPath();
+                if (Arrays.stream(currentTech.getAnimationTypes())
+                        .anyMatch(biotechAnimationState -> biotechAnimationState == state.getData(CustomDataTickets.BIOTECH_ANIMATION_STATE))) {
+                    state.setAnimation(RawAnimation.begin()
+                            .then("animation." + path + "." + state.getData(CustomDataTickets.BIOTECH_ANIMATION_STATE).animationName, Animation.LoopType.LOOP));
                 }
 
                 return PlayState.CONTINUE;

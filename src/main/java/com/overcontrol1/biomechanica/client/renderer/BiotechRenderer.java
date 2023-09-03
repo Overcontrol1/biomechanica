@@ -2,6 +2,7 @@ package com.overcontrol1.biomechanica.client.renderer;
 
 import com.overcontrol1.biomechanica.Biomechanica;
 import com.overcontrol1.biomechanica.biotech.Biotech;
+import com.overcontrol1.biomechanica.biotech.BiotechHolder;
 import com.overcontrol1.biomechanica.client.animation.CustomDataTickets;
 import com.overcontrol1.biomechanica.client.model.DefaultedBiotechModel;
 import com.overcontrol1.biomechanica.item.BiotechAnimatableItem;
@@ -18,11 +19,9 @@ import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.cache.object.GeoBone;
 import software.bernie.geckolib.constant.DataTickets;
 import software.bernie.geckolib.core.animation.AnimationState;
-import software.bernie.geckolib.model.DefaultedItemGeoModel;
 import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.renderer.GeoArmorRenderer;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class BiotechRenderer extends GeoArmorRenderer<BiotechAnimatableItem> {
@@ -115,6 +114,7 @@ public class BiotechRenderer extends GeoArmorRenderer<BiotechAnimatableItem> {
             animationState.setData(DataTickets.ENTITY, this.currentEntity);
             animationState.setData(DataTickets.EQUIPMENT_SLOT, this.currentSlot);
             animationState.setData(CustomDataTickets.BIOTECH, this.currentTech);
+            animationState.setData(CustomDataTickets.BIOTECH_ANIMATION_STATE, ((BiotechHolder) this.currentEntity).getAnimationState());
             this.getGeoModel().addAdditionalStateData(animatable, instanceId, animationState::setData);
             this.getGeoModel().handleAnimations(animatable, instanceId, animationState);
         }

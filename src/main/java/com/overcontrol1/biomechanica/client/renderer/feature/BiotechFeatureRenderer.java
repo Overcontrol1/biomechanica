@@ -7,7 +7,6 @@ import com.overcontrol1.biomechanica.registry.ItemRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
@@ -40,10 +39,10 @@ public class BiotechFeatureRenderer<T extends LivingEntity, M extends BipedEntit
         BiotechRenderer renderer = (BiotechRenderer) ((RenderProvider)((GeoItem) ItemRegistry.BIOTECH_ANIMATABLE).getRenderProvider().get())
                 .getGenericArmorModel(entity, dummyStack, EquipmentSlot.CHEST, (BipedEntityModel<LivingEntity>) this.getContextModel());
 
-
         if (renderer != null) {
-            VertexConsumer vertices = vertexConsumers.getBuffer(RenderLayer.getArmorCutoutNoCull(renderer.getTextureLocation(renderer.getAnimatable()) != null ? renderer.getTextureLocation(renderer.getAnimatable()) : MissingSprite.getMissingSpriteId()));
             for (Biotech biotech : biotechHolder.getAttachedBiotech()) {
+                VertexConsumer vertices = vertexConsumers.getBuffer(biotech.getRenderLayer(renderer.getTextureLocation(renderer.getAnimatable()) != null ? renderer.getTextureLocation(renderer.getAnimatable()) : MissingSprite.getMissingSpriteId()));
+
                 renderer.setCurrentTech(biotech);
                 renderer.prepForRender(entity, dummyStack, biotech.getBodypart(), this.getContextModel());
                 renderer.render(matrices, vertices, light, OverlayTexture.DEFAULT_UV, 1f, 1f, 1f, 1f);

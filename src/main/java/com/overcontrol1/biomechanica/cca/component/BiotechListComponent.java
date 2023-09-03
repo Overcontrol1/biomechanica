@@ -14,7 +14,6 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
 import java.util.List;
-import java.util.Objects;
 
 public class BiotechListComponent implements Component, AutoSyncedComponent {
     public static final String NBT_ID = "Biotech";
@@ -53,8 +52,10 @@ public class BiotechListComponent implements Component, AutoSyncedComponent {
     public void writeToNbt(NbtCompound tag) {
         NbtList list = new NbtList();
         for (Biotech biotech : this.get()) {
-            list.add(NbtString.of(Objects.requireNonNull(
-                    CustomRegistries.BIOTECH.getId(biotech), "Unregistered Biotech").toString()));
+            Identifier id =  CustomRegistries.BIOTECH.getId(biotech);
+            if (id != null) {
+                list.add(NbtString.of(id.toString()));
+            }
         }
 
         tag.put(NBT_ID, list);
@@ -62,8 +63,12 @@ public class BiotechListComponent implements Component, AutoSyncedComponent {
 
     @Override
     public void writeSyncPacket(PacketByteBuf buf, ServerPlayerEntity recipient) {
-        buf.writeCollection(this.get(), (packetByteBuf, biotech) ->
-                packetByteBuf.writeIdentifier(CustomRegistries.BIOTECH.getId(biotech)));
+        buf.writeCollection(this.get(), (packetByteBuf, biotech) -> {
+            Identifier identifier = CustomRegistries.BIOTECH.getId(biotech);
+            if (identifier != null) {
+                packetByteBuf.writeIdentifier(identifier);
+            }
+        });
     }
 
     @Override

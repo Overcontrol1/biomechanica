@@ -1,0 +1,23 @@
+{
+  "type": "biomechanica:biotech_crafting_shaped",
+  "pattern": [
+    "#X#",
+    " R ",
+    "#X#",
+    " R "
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:quartz_block"
+    },
+    "X":  {
+      "item": "minecraft:amethyst_shard"
+    },
+    "R": {
+      "item": "minecraft:redstone_block"
+    }
+  },
+  "result": {
+    "item": "minecraft:diamond"
+  }
+}

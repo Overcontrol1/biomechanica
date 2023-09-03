@@ -13,7 +13,5 @@ public class Biomechanica implements ModInitializer {
     public void onInitialize() {
         BiomechanicaRegistry.register();
         ModMessages.registerC2S();
-
-
     }
 }
