@@ -23,6 +23,6 @@ public class BioVirusEffect extends StatusEffect {
 
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-        entity.damage(entity.getDamageSources().create(DamageTypeRegistry.BIO_VIRUS), amplifier * 0.5f);
+        entity.damage(entity.getDamageSources().create(DamageTypeRegistry.BIO_VIRUS), (amplifier + 1) * 0.5f);
     }
 }

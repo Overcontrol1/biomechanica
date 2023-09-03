@@ -4,6 +4,8 @@ import com.overcontrol1.biomechanica.biotech.Biotech;
 import com.overcontrol1.biomechanica.biotech.BiotechHolder;
 import com.overcontrol1.biomechanica.client.renderer.BiotechRenderer;
 import com.overcontrol1.biomechanica.registry.ItemRegistry;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
@@ -21,6 +23,7 @@ import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.client.RenderProvider;
 
 @SuppressWarnings("unchecked")
+@Environment(EnvType.CLIENT)
 public class BiotechFeatureRenderer<T extends LivingEntity, M extends BipedEntityModel<T>> extends FeatureRenderer<T, M> {
     private Identifier texture;
     private static final ItemStack dummyStack = new ItemStack(ItemRegistry.BIOTECH_ANIMATABLE);
@@ -30,18 +33,20 @@ public class BiotechFeatureRenderer<T extends LivingEntity, M extends BipedEntit
 
     @Override
     public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, T entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
-        if (!(entity instanceof BiotechHolder biotechHolder) || entity.isSpectator()) {
+        if (!(entity instanceof BiotechHolder biotechHolder) || entity.isSpectator() || biotechHolder.getAttachedBiotech().isEmpty()) {
             return;
         }
 
-        BiotechRenderer model = (BiotechRenderer) ((RenderProvider)((GeoItem) ItemRegistry.BIOTECH_ANIMATABLE).getRenderProvider().get()).getGenericArmorModel(entity, dummyStack, EquipmentSlot.CHEST, (BipedEntityModel<LivingEntity>) this.getContextModel());
+        BiotechRenderer renderer = (BiotechRenderer) ((RenderProvider)((GeoItem) ItemRegistry.BIOTECH_ANIMATABLE).getRenderProvider().get())
+                .getGenericArmorModel(entity, dummyStack, EquipmentSlot.CHEST, (BipedEntityModel<LivingEntity>) this.getContextModel());
 
-        if (model != null) {
-            VertexConsumer vertices = vertexConsumers.getBuffer(RenderLayer.getArmorCutoutNoCull(model.getTextureLocation(model.getAnimatable()) != null ? model.getTextureLocation(model.getAnimatable()) : MissingSprite.getMissingSpriteId()));
-            for (Biotech biotech : biotechHolder.getAttachedTech()) {
-                model.setCurrentTech(biotech);
-                model.prepForRender(entity, dummyStack, biotech.getBodypart(), this.getContextModel());
-                model.render(matrices, vertices, light, OverlayTexture.DEFAULT_UV, 1f, 1f, 1f, 1f);
+
+        if (renderer != null) {
+            VertexConsumer vertices = vertexConsumers.getBuffer(RenderLayer.getArmorCutoutNoCull(renderer.getTextureLocation(renderer.getAnimatable()) != null ? renderer.getTextureLocation(renderer.getAnimatable()) : MissingSprite.getMissingSpriteId()));
+            for (Biotech biotech : biotechHolder.getAttachedBiotech()) {
+                renderer.setCurrentTech(biotech);
+                renderer.prepForRender(entity, dummyStack, biotech.getBodypart(), this.getContextModel());
+                renderer.render(matrices, vertices, light, OverlayTexture.DEFAULT_UV, 1f, 1f, 1f, 1f);
             }
         }
     }

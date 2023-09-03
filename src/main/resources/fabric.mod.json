@@ -19,6 +19,9 @@
     ],
     "main": [
       "com.overcontrol1.biomechanica.Biomechanica"
+    ],
+    "cardinal-components": [
+      "com.overcontrol1.biomechanica.cca.BiomechanicaComponents"
     ]
   },
   "mixins": [
@@ -27,6 +30,12 @@
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric": "*",
+    "geckolib": ">=4.0",
     "minecraft": "${minecraft_version}"
+  },
+  "custom": {
+    "cardinal-components": [
+      "biomechanica:attached_biotech"
+    ]
   }
 }

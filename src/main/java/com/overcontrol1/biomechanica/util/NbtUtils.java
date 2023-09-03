@@ -7,7 +7,7 @@ import java.util.Optional;
 public class NbtUtils {
     public static final String MOD_NBT_ID = "Biomechanica";
 
-    public static void writeToModNbt(NbtCompound parent, NbtCompound child) {
+    public static void writeModNbt(NbtCompound parent, NbtCompound child) {
         parent.put(MOD_NBT_ID, child);
     }
 

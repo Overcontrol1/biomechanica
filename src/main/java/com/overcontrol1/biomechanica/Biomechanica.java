@@ -1,5 +1,6 @@
 package com.overcontrol1.biomechanica;
 
+import com.overcontrol1.biomechanica.network.ModMessages;
 import com.overcontrol1.biomechanica.registry.BiomechanicaRegistry;
 import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
@@ -11,5 +12,8 @@ public class Biomechanica implements ModInitializer {
     @Override
     public void onInitialize() {
         BiomechanicaRegistry.register();
+        ModMessages.registerC2S();
+
+
     }
 }
