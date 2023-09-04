@@ -2,9 +2,13 @@ package com.overcontrol1.biomechanica.block.entity;
 
 import com.overcontrol1.biomechanica.Biomechanica;
 import com.overcontrol1.biomechanica.client.screen.BiotechCraftingStationScreenHandler;
+import com.overcontrol1.biomechanica.recipe.BiotechCraftingStationShapedRecipe;
 import com.overcontrol1.biomechanica.registry.BlockEntityRegistry;
+import com.overcontrol1.biomechanica.registry.RecipeRegistry;
+import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
@@ -14,31 +18,66 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.network.packet.s2c.play.ScreenHandlerSlotUpdateS2CPacket;
 import net.minecraft.recipe.RecipeMatcher;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 
 public class BiotechCraftingStationBlockEntity extends BlockEntity implements NamedScreenHandlerFactory, RecipeInputInventory {
     public static final int CONTAINER_SIZE = 12;
     private final DefaultedList<ItemStack> stacks = DefaultedList.ofSize(CONTAINER_SIZE, ItemStack.EMPTY);
-    private ScreenHandler handler;
+    private final Map<PlayerEntity, ScreenHandler> handlerMap = new Object2ObjectArrayMap<>();
+    private ItemStack cachedResult = ItemStack.EMPTY;
     public BiotechCraftingStationBlockEntity(BlockPos pos, BlockState state) {
         super(BlockEntityRegistry.BIOTECH_CRAFTING_STATION, pos, state);
     }
 
-    public void setHandler(ScreenHandler handler) {
-        this.handler = handler;
+    public ItemStack getCachedResult() {
+        return this.cachedResult;
+    }
+
+    public void setCachedResult(ItemStack cachedResult) {
+        this.cachedResult = cachedResult;
+    }
+
+    public void setHandler(PlayerEntity player, ScreenHandler handler) {
+        this.handlerMap.put(player, handler);
     }
 
     public void clearHandler() {
-        this.handler = null;
+        this.handlerMap.clear();
+    }
+
+    public void tryCacheResult() {
+        if (this.world == null || this.isEmpty()) {
+            this.cachedResult = ItemStack.EMPTY;
+            return;
+        }
+        if (this.world.isClient) {
+            ItemStack itemStack = ItemStack.EMPTY;
+            Optional<BiotechCraftingStationShapedRecipe> optional =
+                    world.getRecipeManager().getFirstMatch(RecipeRegistry.Types.BIOTECH_CRAFTING, this, world);
+            if (optional.isPresent()) {
+                BiotechCraftingStationShapedRecipe craftingRecipe = optional.get();
+                ItemStack recipeResult = craftingRecipe.craft(this, world.getRegistryManager());
+                if (recipeResult.isItemEnabled(world.getEnabledFeatures())) {
+                    itemStack = recipeResult;
+                }
+            }
+
+            this.cachedResult = itemStack;
+        }
     }
 
     @Nullable
@@ -62,6 +101,7 @@ public class BiotechCraftingStationBlockEntity extends BlockEntity implements Na
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
         Inventories.readNbt(nbt, this.stacks);
+        tryCacheResult();
     }
 
     @Override
@@ -108,8 +148,8 @@ public class BiotechCraftingStationBlockEntity extends BlockEntity implements Na
     @Override
     public ItemStack removeStack(int slot, int amount) {
         ItemStack toReturn = Inventories.splitStack(this.stacks, slot, amount);
-        if (!toReturn.isEmpty() && this.handler != null) {
-            this.handler.onContentChanged(this);
+        if (!toReturn.isEmpty() && !this.handlerMap.isEmpty()) {
+            this.handlerMap.forEach((player, handler) -> handler.onContentChanged(this));
         }
         return toReturn;
     }
@@ -117,8 +157,8 @@ public class BiotechCraftingStationBlockEntity extends BlockEntity implements Na
     @Override
     public ItemStack removeStack(int slot) {
         ItemStack removed = Inventories.removeStack(stacks, slot);
-        if (!removed.isEmpty() && this.handler != null) {
-            this.handler.onContentChanged(this);
+        if (!removed.isEmpty() && !this.handlerMap.isEmpty()) {
+            this.handlerMap.forEach((player, handler) -> handler.onContentChanged(this));
         }
         return removed;
     }
@@ -126,8 +166,8 @@ public class BiotechCraftingStationBlockEntity extends BlockEntity implements Na
     @Override
     public void setStack(int slot, ItemStack stack) {
         this.stacks.set(slot, stack);
-        if (this.handler != null) {
-            this.handler.onContentChanged(this);
+        if (!this.handlerMap.isEmpty()) {
+            this.handlerMap.forEach((player, handler) -> handler.onContentChanged(this));
         }
     }
 

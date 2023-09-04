@@ -14,6 +14,9 @@ public class ItemRegistry {
     public static final Item BIOTECH_ANIMATABLE = registerItem("biotech_animatable",
             new BiotechAnimatableItem(ArmorMaterials.IRON, ArmorItem.Type.CHESTPLATE,new FabricItemSettings().maxCount(1)));
 
+    public static final Item BIOTECH_EXOSKELETON = registerItem("biotech_exoskeleton",
+            new Item(new FabricItemSettings().maxCount(1)));
+
     public static void register() {
 
     }

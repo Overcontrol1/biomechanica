@@ -37,6 +37,7 @@ public class BiotechCraftingStationBlock extends BlockWithEntity {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof BiotechCraftingStationBlockEntity biotechCraftingStationBlockEntity) {
                 ItemScatterer.spawn(world, pos, biotechCraftingStationBlockEntity);
+                world.updateComparators(pos, this);
             }
         }
     }

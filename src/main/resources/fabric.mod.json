@@ -22,6 +22,9 @@
     ],
     "cardinal-components": [
       "com.overcontrol1.biomechanica.cca.BiomechanicaComponents"
+    ],
+    "fabric-datagen": [
+      "com.overcontrol1.biomechanica.datagen.BiomechanicaDatagen"
     ]
   },
   "mixins": [

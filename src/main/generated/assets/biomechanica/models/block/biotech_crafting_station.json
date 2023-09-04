@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "biomechanica:block/biotech_crafting_station"
+  }
+}

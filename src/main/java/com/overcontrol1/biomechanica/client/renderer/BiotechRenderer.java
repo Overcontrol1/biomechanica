@@ -100,6 +100,15 @@ public class BiotechRenderer extends GeoArmorRenderer<BiotechAnimatableItem> {
     }
 
     @Override
+    public void render(MatrixStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+        if (this.currentTech == null) {
+            return;
+        }
+
+        super.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+    }
+
+    @Override
     public void actuallyRender(MatrixStack poseStack, BiotechAnimatableItem animatable, BakedGeoModel model, RenderLayer renderType, VertexConsumerProvider bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         poseStack.push();
         poseStack.translate(0, 24 / 16f, 0);

@@ -8,5 +8,6 @@ public class BiomechanicaRegistry {
         BiotechRegistry.register();
         EffectRegistry.register();
         RecipeRegistry.register();
+        ItemGroupRegistry.register();
     }
 }

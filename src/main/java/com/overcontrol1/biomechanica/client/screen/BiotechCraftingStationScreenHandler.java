@@ -2,8 +2,13 @@ package com.overcontrol1.biomechanica.client.screen;
 
 import com.overcontrol1.biomechanica.block.entity.BiotechCraftingStationBlockEntity;
 import com.overcontrol1.biomechanica.client.registry.ScreenHandlerRegistry;
+import com.overcontrol1.biomechanica.network.ModMessages;
 import com.overcontrol1.biomechanica.recipe.BiotechCraftingStationShapedRecipe;
 import com.overcontrol1.biomechanica.registry.RecipeRegistry;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.CraftingInventory;
@@ -11,6 +16,7 @@ import net.minecraft.inventory.CraftingResultInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.packet.s2c.play.ScreenHandlerSlotUpdateS2CPacket;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
@@ -31,14 +37,16 @@ public class BiotechCraftingStationScreenHandler extends ScreenHandler {
     // Client
     public BiotechCraftingStationScreenHandler(int syncId, PlayerInventory inventory) {
         super(ScreenHandlerRegistry.BIOTECH_CRAFTING_STATION, syncId);
+
         checkSize(inventory, BiotechCraftingStationBlockEntity.CONTAINER_SIZE);
         this.context = ScreenHandlerContext.EMPTY;
         this.player = inventory.player;
+
         this.inventory = new CraftingInventory(this, 3, 4);
         this.resultInventory = new CraftingResultInventory();
 
-        this.addSlot(new CraftingResultSlot(inventory.player, (RecipeInputInventory) this.inventory, this.resultInventory, 0, 124, 43-8));
-        System.out.println(this.getSlot(0).x);
+        this.addSlot(new CraftingResultSlot(inventory.player, (RecipeInputInventory) this.inventory,
+                this.resultInventory, 0, 124, 43-8));
         inventory.onOpen(inventory.player);
 
         for (int i = 0; i < 4; i++) { // Y
@@ -54,14 +62,18 @@ public class BiotechCraftingStationScreenHandler extends ScreenHandler {
     // Server
     public BiotechCraftingStationScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, ScreenHandlerContext context) {
         super(ScreenHandlerRegistry.BIOTECH_CRAFTING_STATION, syncId);
+
         checkSize(inventory, BiotechCraftingStationBlockEntity.CONTAINER_SIZE);
         this.context = context;
         this.player = playerInventory.player;
+
         this.inventory = inventory;
         this.resultInventory = new CraftingResultInventory();
-        this.addSlot(new CraftingResultSlot(playerInventory.player, (RecipeInputInventory) inventory, this.resultInventory, 0, 120, 140));
-        ((BiotechCraftingStationBlockEntity) inventory).setHandler(this);
-        System.out.println(this.getSlot(0));
+
+        this.addSlot(new CraftingResultSlot(playerInventory.player, (RecipeInputInventory) inventory,
+                this.resultInventory, 0, 120, 140));
+
+        ((BiotechCraftingStationBlockEntity) inventory).setHandler(this.player, this);
         inventory.onOpen(playerInventory.player);
 
         for (int i = 0; i < 4; i++) { // Y
@@ -72,6 +84,11 @@ public class BiotechCraftingStationScreenHandler extends ScreenHandler {
 
         addPlayerInventory(playerInventory);
         addPlayerHotbar(playerInventory);
+
+        if (!inventory.isEmpty()) {
+            updateResult(this, this.player.getWorld(), this.player,
+                    (RecipeInputInventory) this.inventory, this.resultInventory);
+        }
     }
 
     protected static void updateResult(ScreenHandler handler, World world, PlayerEntity player, RecipeInputInventory craftingInventory, CraftingResultInventory resultInventory) {
@@ -89,9 +106,19 @@ public class BiotechCraftingStationScreenHandler extends ScreenHandler {
                 }
             }
 
+            ItemStack previousStack = resultInventory.getStack(0);
             resultInventory.setStack(0, itemStack);
             handler.setPreviousTrackedSlot(0, itemStack);
             serverPlayerEntity.networkHandler.sendPacket(new ScreenHandlerSlotUpdateS2CPacket(handler.syncId, handler.nextRevision(), 0, itemStack));
+            if (itemStack != previousStack) {
+                PacketByteBuf buf = PacketByteBufs.create();
+                buf.writeBlockPos(((BlockEntity) craftingInventory).getPos());
+                buf.writeItemStack(itemStack);
+                for (ServerPlayerEntity playerEntity : PlayerLookup.tracking((BlockEntity) craftingInventory)) {
+
+                    ServerPlayNetworking.send(playerEntity, ModMessages.CACHE_RESULT_S2C, PacketByteBufs.copy(buf));
+                }
+            }
         }
     }
 
