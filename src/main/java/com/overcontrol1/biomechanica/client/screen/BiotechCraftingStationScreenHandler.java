@@ -30,53 +30,40 @@ import net.minecraft.world.World;
 import java.util.Objects;
 import java.util.Optional;
 
-public class BiotechCraftingStationScreenHandler extends ScreenHandler {
-    private final Inventory inventory;
-    private final PlayerEntity player;
-    private final CraftingResultInventory resultInventory;
-    private final ScreenHandlerContext context;
+public class BiotechCraftingStationScreenHandler extends GenericScreenHandler {
+    private CraftingResultInventory resultInventory;
 
     // Client
     public BiotechCraftingStationScreenHandler(int syncId, PlayerInventory inventory) {
-        super(ScreenHandlerRegistry.BIOTECH_CRAFTING_STATION, syncId);
-
-        checkSize(inventory, BiotechCraftingStationBlockEntity.CONTAINER_SIZE);
-        this.context = ScreenHandlerContext.EMPTY;
-        this.player = inventory.player;
+        super(ScreenHandlerRegistry.BIOTECH_CRAFTING_STATION, syncId, inventory, null, ScreenHandlerContext.EMPTY);
 
         this.inventory = new CraftingInventory(this, 3, 4);
-        this.resultInventory = new CraftingResultInventory();
 
-        this.addSlot(new HandlerAttachedCraftingResultSlot(inventory.player, (RecipeInputInventory) this.inventory,
-                this.resultInventory, 0, 124, 43-8, this));
-        inventory.onOpen(inventory.player);
-
-        for (int i = 0; i < 4; i++) { // Y
-            for (int j = 0; j < 3; j++) { // X
-                this.addSlot(new Slot(this.inventory, j + i * 3, 30 + j * 18, 17 + i * 18-9));
-            }
-        }
-
-        addPlayerInventory(inventory);
-        addPlayerHotbar(inventory);
+        init();
     }
 
     // Server
     public BiotechCraftingStationScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, ScreenHandlerContext context) {
-        super(ScreenHandlerRegistry.BIOTECH_CRAFTING_STATION, syncId);
+        super(ScreenHandlerRegistry.BIOTECH_CRAFTING_STATION, syncId, playerInventory, inventory, context);
 
+        init();
+
+        if (!inventory.isEmpty()) {
+            updateResult(this, this.player.getWorld(), this.player,
+                    (RecipeInputInventory) this.inventory, this.resultInventory);
+        }
+    }
+
+    protected void init() {
         checkSize(inventory, BiotechCraftingStationBlockEntity.CONTAINER_SIZE);
-        this.context = context;
-        this.player = playerInventory.player;
 
-        this.inventory = inventory;
         this.resultInventory = new CraftingResultInventory();
 
-        this.addSlot(new HandlerAttachedCraftingResultSlot(playerInventory.player, (RecipeInputInventory) inventory,
-                this.resultInventory, 0, 120, 140, this));
+        this.addSlot(new HandlerAttachedCraftingResultSlot(this.player, (RecipeInputInventory) inventory,
+                this.resultInventory, 0, 124, 35, this));
 
         ((BiotechCraftingStationBlockEntity) inventory).setHandler(this.player, this);
-        inventory.onOpen(playerInventory.player);
+        inventory.onOpen(this.player);
 
         for (int i = 0; i < 4; i++) { // Y
             for (int j = 0; j < 3; j++) { // X
@@ -86,11 +73,6 @@ public class BiotechCraftingStationScreenHandler extends ScreenHandler {
 
         addPlayerInventory(playerInventory);
         addPlayerHotbar(playerInventory);
-
-        if (!inventory.isEmpty()) {
-            updateResult(this, this.player.getWorld(), this.player,
-                    (RecipeInputInventory) this.inventory, this.resultInventory);
-        }
     }
 
     protected static void updateResult(ScreenHandler handler, World world, PlayerEntity player,
@@ -134,37 +116,6 @@ public class BiotechCraftingStationScreenHandler extends ScreenHandler {
     public void onContentChanged(Inventory inventory) {
         this.context.run((world, blockPos) ->
                 updateResult(this, world, this.player, (RecipeInputInventory) this.inventory, this.resultInventory));
-    }
-
-    @Override
-    public ItemStack quickMove(PlayerEntity player, int slotIndex) {
-        ItemStack newStack = ItemStack.EMPTY;
-        Slot slot = this.slots.get(slotIndex);
-
-        if (slot.hasStack()) {
-            ItemStack originalStack = slot.getStack();
-            newStack = originalStack.copy();
-            if (slotIndex < this.inventory.size()) {
-                if (!this.insertItem(originalStack, this.inventory.size(), this.slots.size(), true)) {
-                    return ItemStack.EMPTY;
-                }
-            } else if (!this.insertItem(originalStack, 0, this.inventory.size(), false)) {
-                return ItemStack.EMPTY;
-            }
-
-            if (originalStack.isEmpty()) {
-                slot.setStack(ItemStack.EMPTY);
-            } else {
-                slot.markDirty();
-            }
-        }
-
-        return newStack;
-    }
-
-    @Override
-    public boolean canUse(PlayerEntity player) {
-        return this.inventory.canPlayerUse(player);
     }
 
     private void addPlayerInventory(PlayerInventory inventory) {
