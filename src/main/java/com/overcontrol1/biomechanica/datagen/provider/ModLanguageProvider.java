@@ -1,5 +1,6 @@
 package com.overcontrol1.biomechanica.datagen.provider;
 
+import com.overcontrol1.biomechanica.Biomechanica;
 import com.overcontrol1.biomechanica.registry.BlockEntityRegistry;
 import com.overcontrol1.biomechanica.registry.BlockRegistry;
 import com.overcontrol1.biomechanica.registry.ItemRegistry;
@@ -7,6 +8,8 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public class ModLanguageProvider extends FabricLanguageProvider {
@@ -20,19 +23,32 @@ public class ModLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add(ItemRegistry.BIOTECH_EXOSKELETON, "Biotech Exoskeleton");
 
         translationBuilder.add(BlockRegistry.BIOTECH_CRAFTING_STATION, "Biotech Crafting Station");
+        translationBuilder.add(BlockRegistry.BIOTECH_CORE_INSERTER, "Biotech Core Inserter");
 
         addBlockEntity(translationBuilder, BlockEntityRegistry.BIOTECH_CRAFTING_STATION, "Biotech Crafting Station");
 
-        translationBuilder.add("itemGroup.biomechanica.main", "Biomechanica");
+        addItemGroup(translationBuilder, "main", "Biomechanica");
 
-        translationBuilder.add("death.attack.bio_virus", "%1$s had their body melted away");
+        addDamageSource(translationBuilder, "bio_virus", "%1$s had their body melted away");
     }
 
     private static void addBlockEntity(TranslationBuilder builder, BlockEntityType<?> blockEntityType, String translation) {
-        Identifier id = Registries.BLOCK_ENTITY_TYPE.getId(blockEntityType);
+        addTranslation(builder, "blockEntity", Registries.BLOCK_ENTITY_TYPE, blockEntityType, translation);
+    }
+
+    private static void addItemGroup(TranslationBuilder builder, String name, String translation) {
+        builder.add("itemGroup." + Biomechanica.MOD_ID + "." + name, translation);
+    }
+
+    private static void addDamageSource(TranslationBuilder builder, String name, String translation) {
+        builder.add("death.attack." + name, translation);
+    }
+
+    private static <T> void addTranslation(TranslationBuilder builder, String base, Registry<T> registry, T value, String translation) {
+        Identifier id = registry.getId(value);
 
         if (id != null) {
-            builder.add("blockentity." + id.getNamespace() + "." + id.getPath(), translation);
+            builder.add(base + "." + id.getNamespace() + "." + id.getPath(), translation);
         }
     }
 }

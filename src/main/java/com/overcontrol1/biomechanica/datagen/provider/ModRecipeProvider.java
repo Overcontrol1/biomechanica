@@ -31,6 +31,14 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern(" R ")
                 .offerTo(exporter, new Identifier(Biomechanica.MOD_ID, "biotech_exoskeleton"));
 
+        BiotechCraftingShapedJsonBuilder.create(BlockRegistry.BIOTECH_CORE_INSERTER)
+                .input('I', Blocks.IRON_BLOCK).input('O', Blocks.OBSIDIAN).input('G', Blocks.GOLD_BLOCK).input('L', Blocks.GLASS)
+                .pattern("OGO")
+                .pattern("ILI")
+                .pattern("ILI")
+                .pattern("OGO")
+                .offerTo(exporter, new Identifier(Biomechanica.MOD_ID, "biotech_core_inserter"));
+
         ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, BlockRegistry.BIOTECH_CRAFTING_STATION)
                 .input('O', Blocks.OBSIDIAN).input('D', Items.DIAMOND).input('I', Blocks.IRON_BLOCK).input('S', Blocks.SMITHING_TABLE)
                 .pattern("OSO")

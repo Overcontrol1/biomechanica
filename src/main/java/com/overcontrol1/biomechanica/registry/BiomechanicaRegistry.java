@@ -9,5 +9,6 @@ public class BiomechanicaRegistry {
         EffectRegistry.register();
         RecipeRegistry.register();
         ItemGroupRegistry.register();
+        CoreTypeRegistry.register();
     }
 }

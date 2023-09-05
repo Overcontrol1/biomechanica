@@ -2,6 +2,7 @@ package com.overcontrol1.biomechanica.client.screen;
 
 import com.overcontrol1.biomechanica.block.entity.BiotechCraftingStationBlockEntity;
 import com.overcontrol1.biomechanica.client.registry.ScreenHandlerRegistry;
+import com.overcontrol1.biomechanica.client.slot.HandlerAttachedCraftingResultSlot;
 import com.overcontrol1.biomechanica.network.ModMessages;
 import com.overcontrol1.biomechanica.recipe.BiotechCraftingStationShapedRecipe;
 import com.overcontrol1.biomechanica.registry.RecipeRegistry;
@@ -22,6 +23,7 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.slot.CraftingResultSlot;
 import net.minecraft.screen.slot.Slot;
+import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.world.World;
 
@@ -45,8 +47,8 @@ public class BiotechCraftingStationScreenHandler extends ScreenHandler {
         this.inventory = new CraftingInventory(this, 3, 4);
         this.resultInventory = new CraftingResultInventory();
 
-        this.addSlot(new CraftingResultSlot(inventory.player, (RecipeInputInventory) this.inventory,
-                this.resultInventory, 0, 124, 43-8));
+        this.addSlot(new HandlerAttachedCraftingResultSlot(inventory.player, (RecipeInputInventory) this.inventory,
+                this.resultInventory, 0, 124, 43-8, this));
         inventory.onOpen(inventory.player);
 
         for (int i = 0; i < 4; i++) { // Y
@@ -70,8 +72,8 @@ public class BiotechCraftingStationScreenHandler extends ScreenHandler {
         this.inventory = inventory;
         this.resultInventory = new CraftingResultInventory();
 
-        this.addSlot(new CraftingResultSlot(playerInventory.player, (RecipeInputInventory) inventory,
-                this.resultInventory, 0, 120, 140));
+        this.addSlot(new HandlerAttachedCraftingResultSlot(playerInventory.player, (RecipeInputInventory) inventory,
+                this.resultInventory, 0, 120, 140, this));
 
         ((BiotechCraftingStationBlockEntity) inventory).setHandler(this.player, this);
         inventory.onOpen(playerInventory.player);
@@ -91,9 +93,10 @@ public class BiotechCraftingStationScreenHandler extends ScreenHandler {
         }
     }
 
-    protected static void updateResult(ScreenHandler handler, World world, PlayerEntity player, RecipeInputInventory craftingInventory, CraftingResultInventory resultInventory) {
+    protected static void updateResult(ScreenHandler handler, World world, PlayerEntity player,
+                                       RecipeInputInventory craftingInventory, CraftingResultInventory resultInventory) {
         if (!world.isClient) {
-            ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity)player;
+            ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity) player;
             ItemStack itemStack = ItemStack.EMPTY;
             Optional<BiotechCraftingStationShapedRecipe> optional = Objects.requireNonNull(world.getServer()).getRecipeManager().getFirstMatch(RecipeRegistry.Types.BIOTECH_CRAFTING, craftingInventory, world);
             if (optional.isPresent()) {
@@ -111,13 +114,18 @@ public class BiotechCraftingStationScreenHandler extends ScreenHandler {
             handler.setPreviousTrackedSlot(0, itemStack);
             serverPlayerEntity.networkHandler.sendPacket(new ScreenHandlerSlotUpdateS2CPacket(handler.syncId, handler.nextRevision(), 0, itemStack));
             if (itemStack != previousStack) {
-                PacketByteBuf buf = PacketByteBufs.create();
-                buf.writeBlockPos(((BlockEntity) craftingInventory).getPos());
-                buf.writeItemStack(itemStack);
-                for (ServerPlayerEntity playerEntity : PlayerLookup.tracking((BlockEntity) craftingInventory)) {
+                ((BiotechCraftingStationScreenHandler) handler).sendCachePacket(itemStack, (BlockEntity) craftingInventory, world);
+            }
+        }
+    }
 
-                    ServerPlayNetworking.send(playerEntity, ModMessages.CACHE_RESULT_S2C, PacketByteBufs.copy(buf));
-                }
+    private void sendCachePacket(ItemStack stackToCache, BlockEntity blockEntity, World world) {
+        if (!world.isClient) {
+            PacketByteBuf buf = PacketByteBufs.create();
+            buf.writeBlockPos(blockEntity.getPos());
+            buf.writeItemStack(stackToCache);
+            for (ServerPlayerEntity playerEntity : PlayerLookup.tracking(blockEntity)) {
+                ServerPlayNetworking.send(playerEntity, ModMessages.CACHE_RESULT_S2C, PacketByteBufs.copy(buf));
             }
         }
     }

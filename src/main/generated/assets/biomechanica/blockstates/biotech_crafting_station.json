@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "biomechanica:block/biotech_crafting_station"
+      "model": "minecraft:block/iron_block"
     }
   }
 }

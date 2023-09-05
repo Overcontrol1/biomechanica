@@ -106,7 +106,7 @@ public class BiotechCraftingStationBlockEntity extends BlockEntity implements Na
 
     @Override
     public Text getDisplayName() {
-        return Text.translatable("blockentity." + Biomechanica.MOD_ID + ".biotech_crafting_station");
+        return Text.translatable("blockEntity." + Biomechanica.MOD_ID + ".biotech_crafting_station");
     }
 
     @Nullable

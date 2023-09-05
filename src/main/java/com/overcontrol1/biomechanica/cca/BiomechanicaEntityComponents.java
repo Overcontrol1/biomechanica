@@ -9,7 +9,7 @@ import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 
-public class BiomechanicaComponents implements EntityComponentInitializer {
+public class BiomechanicaEntityComponents implements EntityComponentInitializer {
     public static final ComponentKey<BiotechListComponent> ATTACHED_BIOTECH =
             ComponentRegistry.getOrCreate(new Identifier(Biomechanica.MOD_ID, "attached_biotech"), BiotechListComponent.class);
 

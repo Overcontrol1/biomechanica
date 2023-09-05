@@ -1,0 +1,26 @@
+{
+  "type": "biomechanica:biotech_crafting_shaped",
+  "key": {
+    "G": {
+      "item": "minecraft:gold_block"
+    },
+    "I": {
+      "item": "minecraft:iron_block"
+    },
+    "L": {
+      "item": "minecraft:glass"
+    },
+    "O": {
+      "item": "minecraft:obsidian"
+    }
+  },
+  "pattern": [
+    "OGO",
+    "ILI",
+    "ILI",
+    "OGO"
+  ],
+  "result": {
+    "item": "biomechanica:biotech_core_inserter"
+  }
+}

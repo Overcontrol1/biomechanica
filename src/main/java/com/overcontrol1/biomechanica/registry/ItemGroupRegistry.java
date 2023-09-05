@@ -14,6 +14,8 @@ public class ItemGroupRegistry {
             .displayName(Text.translatable("itemGroup.biomechanica.main"))
             .icon(() -> new ItemStack(BlockRegistry.BIOTECH_CRAFTING_STATION)).entries((displayContext, entries) -> {
                 entries.add(BlockRegistry.BIOTECH_CRAFTING_STATION);
+                entries.add(BlockRegistry.BIOTECH_CORE_INSERTER);
+                entries.add(ItemRegistry.BIOTECH_EXOSKELETON);
             }).build());
 
     public static void register() {

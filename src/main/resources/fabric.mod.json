@@ -21,7 +21,8 @@
       "com.overcontrol1.biomechanica.Biomechanica"
     ],
     "cardinal-components": [
-      "com.overcontrol1.biomechanica.cca.BiomechanicaComponents"
+      "com.overcontrol1.biomechanica.cca.BiomechanicaEntityComponents",
+      "com.overcontrol1.biomechanica.cca.BiomechanicaItemComponents"
     ],
     "fabric-datagen": [
       "com.overcontrol1.biomechanica.datagen.BiomechanicaDatagen"
@@ -38,7 +39,8 @@
   },
   "custom": {
     "cardinal-components": [
-      "biomechanica:attached_biotech"
+      "biomechanica:attached_biotech",
+      "biomechanica:core_type"
     ]
   }
 }

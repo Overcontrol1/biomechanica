@@ -17,6 +17,10 @@ public class ItemRegistry {
     public static final Item BIOTECH_EXOSKELETON = registerItem("biotech_exoskeleton",
             new Item(new FabricItemSettings().maxCount(1)));
 
+    public static final Item BIOTECH_CORE = registerItem("biotech_core",
+            new Item(new FabricItemSettings().maxCount(1)));
+
+
     public static void register() {
 
     }
