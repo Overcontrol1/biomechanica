@@ -1,8 +1,6 @@
 package com.overcontrol1.biomechanica.block;
 
 import com.overcontrol1.biomechanica.block.entity.BiotechCoreInserterBlockEntity;
-import com.overcontrol1.biomechanica.block.entity.BiotechCraftingStationBlockEntity;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;

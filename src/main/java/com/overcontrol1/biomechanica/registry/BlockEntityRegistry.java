@@ -1,7 +1,6 @@
 package com.overcontrol1.biomechanica.registry;
 
 import com.overcontrol1.biomechanica.Biomechanica;
-import com.overcontrol1.biomechanica.block.BiotechCoreInserterBlock;
 import com.overcontrol1.biomechanica.block.entity.BiotechCoreInserterBlockEntity;
 import com.overcontrol1.biomechanica.block.entity.BiotechCraftingStationBlockEntity;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;

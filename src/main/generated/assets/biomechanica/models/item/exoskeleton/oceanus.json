@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "biomechanica:item/biotech_exoskeleton"
+    "layer0": "biomechanica:item/exoskeleton/oceanus"
   }
 }

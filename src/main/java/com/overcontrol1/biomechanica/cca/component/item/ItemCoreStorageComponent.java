@@ -2,7 +2,6 @@ package com.overcontrol1.biomechanica.cca.component.item;
 
 import com.overcontrol1.biomechanica.cca.component.CoreStorageComponent;
 import com.overcontrol1.biomechanica.item.util.CoreType;
-import com.overcontrol1.biomechanica.registry.CoreTypeRegistry;
 import com.overcontrol1.biomechanica.registry.custom.CustomRegistries;
 import dev.onyxstudios.cca.api.v3.item.ItemComponent;
 import net.minecraft.item.ItemStack;
@@ -17,7 +16,6 @@ public class ItemCoreStorageComponent extends ItemComponent implements CoreStora
 
     @Override
     public CoreType getCoreType() {
-        if (this.hasTag("CoreType")) this.setCoreType(CoreTypeRegistry.CUSTOS);
         return CustomRegistries.CORE_TYPES.get(Identifier.tryParse(this.getString("CoreType")));
     }
 

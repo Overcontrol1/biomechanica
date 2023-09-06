@@ -4,7 +4,6 @@ import com.overcontrol1.biomechanica.Biomechanica;
 import com.overcontrol1.biomechanica.datagen.provider.json.BiotechCraftingShapedJsonBuilder;
 import com.overcontrol1.biomechanica.registry.BlockRegistry;
 import com.overcontrol1.biomechanica.registry.ItemRegistry;
-import net.minecraft.advancement.criterion.CriterionConditions;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.DataOutput;
 import net.minecraft.data.server.recipe.RecipeJsonProvider;
