@@ -40,8 +40,7 @@ public class ModModelProvider extends FabricModelProvider {
         Models.GENERATED.upload(defaultModelId, TextureMap.layer0(defaultModelId), generator.writer);
 
         for (CoreType coreType : CustomRegistries.CORE_TYPES.stream().toList()) {
-            Identifier coreTypeId = Objects.requireNonNull(CustomRegistries.CORE_TYPES.getId(coreType));
-            Identifier modelId = coreTypeId.withPrefixedPath("item/exoskeleton/");
+            Identifier modelId = new Identifier(Biomechanica.MOD_ID, "item/exoskeleton/" + coreType.biomeId());
 
             Models.GENERATED.upload(modelId, TextureMap.layer0(modelId), generator.writer);
         }

@@ -16,7 +16,6 @@ public class ScreenHandlerRegistry {
     public static void register() {
         BIOTECH_CRAFTING_STATION = new ScreenHandlerType<>(BiotechCraftingStationScreenHandler::new, FeatureFlags.VANILLA_FEATURES);
         BIOTECH_CORE_INSERTER = new ScreenHandlerType<>(BiotechCoreInserterScreenHandler::new, FeatureFlags.VANILLA_FEATURES);
-
     }
 
     private static ScreenHandlerType<?> registerScreenHandler(String name, ScreenHandlerType<?> handler) {

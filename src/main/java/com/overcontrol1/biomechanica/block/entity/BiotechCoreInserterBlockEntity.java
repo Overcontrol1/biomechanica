@@ -1,6 +1,7 @@
 package com.overcontrol1.biomechanica.block.entity;
 
 import com.overcontrol1.biomechanica.Biomechanica;
+import com.overcontrol1.biomechanica.client.screen.BiotechCoreInserterScreenHandler;
 import com.overcontrol1.biomechanica.client.screen.BiotechCraftingStationScreenHandler;
 import com.overcontrol1.biomechanica.registry.BlockEntityRegistry;
 import com.overcontrol1.biomechanica.util.ImplementedInventory;
@@ -59,12 +60,12 @@ public class BiotechCoreInserterBlockEntity extends BlockEntity implements Named
 
     @Override
     public Text getDisplayName() {
-        return Text.translatable("blockEntity." + Biomechanica.MOD_ID + ".biotech_crafting_station");
+        return Text.translatable("blockEntity." + Biomechanica.MOD_ID + ".biotech_core_inserter");
     }
 
     @Nullable
     @Override
     public ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
-        return new BiotechCraftingStationScreenHandler(syncId, playerInventory, this, ScreenHandlerContext.create(world, pos));
+        return new BiotechCoreInserterScreenHandler(syncId, playerInventory, this, ScreenHandlerContext.create(world, pos));
     }
 }

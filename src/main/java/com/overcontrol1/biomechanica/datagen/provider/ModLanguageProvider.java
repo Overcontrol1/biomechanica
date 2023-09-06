@@ -25,6 +25,7 @@ public class ModLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add(BlockRegistry.BIOTECH_CORE_INSERTER, "Biotech Core Inserter");
 
         addBlockEntity(translationBuilder, BlockEntityRegistry.BIOTECH_CRAFTING_STATION, "Biotech Crafting Station");
+        addBlockEntity(translationBuilder, BlockEntityRegistry.BIOTECH_CORE_INSERTER, "Biotech Core Inserter");
 
         addItemGroup(translationBuilder, "main", "Biomechanica");
 

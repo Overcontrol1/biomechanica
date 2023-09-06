@@ -60,7 +60,9 @@ public class BiotechCraftingStationScreenHandler extends GenericScreenHandler {
         this.addSlot(new HandlerAttachedCraftingResultSlot(this.player, (RecipeInputInventory) inventory,
                 this.resultInventory, 0, 124, 35, this));
 
-        ((BiotechCraftingStationBlockEntity) inventory).setHandler(this.player, this);
+        if (this.inventory instanceof BiotechCraftingStationBlockEntity) {
+            ((BiotechCraftingStationBlockEntity) inventory).setHandler(this.player, this);
+        }
         inventory.onOpen(this.player);
 
         for (int i = 0; i < 4; i++) { // Y

@@ -39,7 +39,7 @@ public class BiotechExoskeletonItem extends Item implements DynamicModelItem {
     public Identifier getModel(ItemStack stack) {
         CoreType coreType = BiomechanicaItemComponents.CORE_TYPE.get(stack).getCoreType();
         if (coreType != null) {
-            return Objects.requireNonNull(CustomRegistries.CORE_TYPES.getId(coreType)).withPrefixedPath(BASE_PATH);
+            return Objects.requireNonNull(CustomRegistries.CORE_TYPES.getId(coreType)).withPath(BASE_PATH + coreType.biomeId());
         } else {
             return new Identifier(Biomechanica.MOD_ID, BASE_PATH + "default");
         }

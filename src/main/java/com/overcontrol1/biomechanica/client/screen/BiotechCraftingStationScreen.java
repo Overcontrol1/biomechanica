@@ -22,7 +22,6 @@ public class BiotechCraftingStationScreen extends HandledScreen<BiotechCraftingS
         titleY = -3;
         titleX = (backgroundWidth - textRenderer.getWidth(title)) / 2;
         playerInventoryTitleY = 81;
-
     }
 
     @Override

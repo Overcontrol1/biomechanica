@@ -1,12 +1,12 @@
-// 1.20.1	2023-09-06T20:58:17.2005032	Biomechanica/Model Definitions
-b31f8dc5d78015d26e79d72c9b2af7e1a50e8e60 assets\biomechanica\models\item\exoskeleton\calor.json
-2266fa86499f36771d91550e4a14d383943bd55d assets\biomechanica\models\item\exoskeleton\ignis.json
+// 1.20.1	2023-09-06T23:51:37.4335135	Biomechanica/Model Definitions
 e2e4f8fd64dbacff3f93d945cf213cc4a52eddf5 assets\biomechanica\blockstates\biotech_crafting_station.json
-9c615350a42c1b944c43cc79cce98fa9949c765a assets\biomechanica\models\item\exoskeleton\saltu.json
+e1ab5cdb0e40b2e33fad409ce89e709f15bf8971 assets\biomechanica\models\item\exoskeleton\desert.json
+4e811a1a563b7b59d79d5815705baf7e8aed2d98 assets\biomechanica\models\item\exoskeleton\ocean.json
 81326ce235b25a420e365cecb7289781ee544b36 assets\biomechanica\models\item\biotech_core_inserter.json
 ba39b29649513e358f4f68a16a893ca8b7558c87 assets\biomechanica\models\item\biotech_crafting_station.json
-387e62dd6162baf2ccd394c4598e59f1904ef4fe assets\biomechanica\models\item\exoskeleton\oceanus.json
+eabd5507d1e4148990f940331ffefd88a2b30641 assets\biomechanica\models\item\exoskeleton\deep_dark.json
 65c1d03dfa1df874200d3ed6e7d8b984496a8187 assets\biomechanica\models\item\biotech_animatable.json
 067e40e3af78f1e580678a95cb9b30149d07b390 assets\biomechanica\blockstates\biotech_core_inserter.json
+01867c69f3ac22876393d55a5e503fe0b67c96f8 assets\biomechanica\models\item\exoskeleton\nether.json
+e7d29257d72000faf0b17430b46955bc5f110a91 assets\biomechanica\models\item\exoskeleton\jungle.json
 26e1f4576ec36696d2b7115851a950d4e73d29a1 assets\biomechanica\models\item\exoskeleton\default.json
-9e171886dc675fae2773ae58ca5256c4fe5fe788 assets\biomechanica\models\item\exoskeleton\custos.json
