@@ -16,6 +16,7 @@ public class ItemGroupRegistry {
                 entries.add(BlockRegistry.BIOTECH_CRAFTING_STATION);
                 entries.add(BlockRegistry.BIOTECH_CORE_INSERTER);
                 entries.add(ItemRegistry.BIOTECH_EXOSKELETON);
+                entries.add(ItemRegistry.BIOTECH_CORE);
             }).build());
 
     public static void register() {

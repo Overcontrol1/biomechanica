@@ -1,4 +1,4 @@
-package com.overcontrol1.biomechanica.client.screen;
+package com.overcontrol1.biomechanica.screen;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -22,6 +22,12 @@ public class GenericScreenHandler extends ScreenHandler {
         this.player = playerInventory.player;
         this.inventory = inventory;
         this.context = context;
+    }
+
+    protected void addSlots(Slot... slots) {
+        for (Slot slot : slots) {
+            this.addSlot(slot);
+        }
     }
 
     @Override

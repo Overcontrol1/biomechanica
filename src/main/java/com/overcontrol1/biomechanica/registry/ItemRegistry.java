@@ -2,6 +2,7 @@ package com.overcontrol1.biomechanica.registry;
 
 import com.overcontrol1.biomechanica.Biomechanica;
 import com.overcontrol1.biomechanica.item.BiotechAnimatableItem;
+import com.overcontrol1.biomechanica.item.BiotechCoreItem;
 import com.overcontrol1.biomechanica.item.BiotechExoskeletonItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.ArmorItem;
@@ -19,11 +20,10 @@ public class ItemRegistry {
             new BiotechExoskeletonItem(new FabricItemSettings().maxCount(1)));
 
     public static final Item BIOTECH_CORE = registerItem("biotech_core",
-            new Item(new FabricItemSettings().maxCount(1)));
+            new BiotechCoreItem(new FabricItemSettings().maxCount(1)));
 
 
     public static void register() {
-
     }
 
     private static Item registerItem(String name, Item item) {

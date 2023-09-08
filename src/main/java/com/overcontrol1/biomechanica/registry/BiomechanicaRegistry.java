@@ -10,5 +10,6 @@ public class BiomechanicaRegistry {
         RecipeRegistry.register();
         ItemGroupRegistry.register();
         CoreTypeRegistry.register();
+        ScreenHandlerRegistry.register();
     }
 }

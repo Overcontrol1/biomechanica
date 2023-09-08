@@ -1,10 +1,13 @@
 package com.overcontrol1.biomechanica.block;
 
 import com.overcontrol1.biomechanica.block.entity.BiotechCoreInserterBlockEntity;
+import com.overcontrol1.biomechanica.registry.BlockEntityRegistry;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.util.ActionResult;
@@ -52,5 +55,11 @@ public class BiotechCoreInserterBlock extends BlockWithEntity {
         }
 
         return ActionResult.SUCCESS;
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return checkType(type, BlockEntityRegistry.BIOTECH_CORE_INSERTER, BiotechCoreInserterBlockEntity::tick);
     }
 }

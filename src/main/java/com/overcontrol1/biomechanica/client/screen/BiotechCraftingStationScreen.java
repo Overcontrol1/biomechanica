@@ -1,6 +1,7 @@
 package com.overcontrol1.biomechanica.client.screen;
 
 import com.overcontrol1.biomechanica.client.util.ScreenUtil;
+import com.overcontrol1.biomechanica.screen.BiotechCraftingStationScreenHandler;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.entity.player.PlayerInventory;
