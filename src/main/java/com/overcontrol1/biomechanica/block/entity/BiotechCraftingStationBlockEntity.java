@@ -1,10 +1,10 @@
 package com.overcontrol1.biomechanica.block.entity;
 
 import com.overcontrol1.biomechanica.Biomechanica;
-import com.overcontrol1.biomechanica.client.screen.BiotechCraftingStationScreenHandler;
 import com.overcontrol1.biomechanica.recipe.BiotechCraftingStationShapedRecipe;
 import com.overcontrol1.biomechanica.registry.BlockEntityRegistry;
 import com.overcontrol1.biomechanica.registry.RecipeRegistry;
+import com.overcontrol1.biomechanica.screen.BiotechCraftingStationScreenHandler;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;

@@ -1,12 +1,18 @@
-// 1.20.1	2023-09-06T23:51:37.4335135	Biomechanica/Model Definitions
+// 1.20.1	2023-09-08T18:22:33.1169768	Biomechanica/Model Definitions
+f9e4ff881c6738f79d6a594a5068bd453d3241da assets\biomechanica\models\item\core\nether.json
+279362f26453d6aa0a478b6d77ad52b04e9ab370 assets\biomechanica\models\item\core\desert.json
 e2e4f8fd64dbacff3f93d945cf213cc4a52eddf5 assets\biomechanica\blockstates\biotech_crafting_station.json
-e1ab5cdb0e40b2e33fad409ce89e709f15bf8971 assets\biomechanica\models\item\exoskeleton\desert.json
-4e811a1a563b7b59d79d5815705baf7e8aed2d98 assets\biomechanica\models\item\exoskeleton\ocean.json
 81326ce235b25a420e365cecb7289781ee544b36 assets\biomechanica\models\item\biotech_core_inserter.json
-ba39b29649513e358f4f68a16a893ca8b7558c87 assets\biomechanica\models\item\biotech_crafting_station.json
-eabd5507d1e4148990f940331ffefd88a2b30641 assets\biomechanica\models\item\exoskeleton\deep_dark.json
 65c1d03dfa1df874200d3ed6e7d8b984496a8187 assets\biomechanica\models\item\biotech_animatable.json
 067e40e3af78f1e580678a95cb9b30149d07b390 assets\biomechanica\blockstates\biotech_core_inserter.json
+e57389ead7d7f2e06af27a5318543126dde82d38 assets\biomechanica\models\item\core\ocean.json
+61ae8e2d04b256d329c40bc9d3b277330459101f assets\biomechanica\models\item\core\deep_dark.json
 01867c69f3ac22876393d55a5e503fe0b67c96f8 assets\biomechanica\models\item\exoskeleton\nether.json
 e7d29257d72000faf0b17430b46955bc5f110a91 assets\biomechanica\models\item\exoskeleton\jungle.json
+4514e54cbc0c49a08fe901bb72d56fb81e37c955 assets\biomechanica\models\item\core\default.json
+e1ab5cdb0e40b2e33fad409ce89e709f15bf8971 assets\biomechanica\models\item\exoskeleton\desert.json
+4e811a1a563b7b59d79d5815705baf7e8aed2d98 assets\biomechanica\models\item\exoskeleton\ocean.json
+ba39b29649513e358f4f68a16a893ca8b7558c87 assets\biomechanica\models\item\biotech_crafting_station.json
+eabd5507d1e4148990f940331ffefd88a2b30641 assets\biomechanica\models\item\exoskeleton\deep_dark.json
+1742856582049e9c7c8e87c172bcd35310b7b093 assets\biomechanica\models\item\core\jungle.json
 26e1f4576ec36696d2b7115851a950d4e73d29a1 assets\biomechanica\models\item\exoskeleton\default.json

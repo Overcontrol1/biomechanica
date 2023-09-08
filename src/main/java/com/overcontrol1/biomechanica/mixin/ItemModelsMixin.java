@@ -17,9 +17,10 @@ public class ItemModelsMixin {
     @Shadow @Final private BakedModelManager modelManager;
 
     @Inject(method = "getModel(Lnet/minecraft/item/ItemStack;)Lnet/minecraft/client/render/model/BakedModel;", at = @At("HEAD"), cancellable = true)
-    public void injectModelOverrides(ItemStack stack, CallbackInfoReturnable<BakedModel> cir) {
+    public void overrideDynamicModels(ItemStack stack, CallbackInfoReturnable<BakedModel> cir) {
         if (stack.getItem() instanceof DynamicModelItem modelItem) {
-            cir.setReturnValue(this.modelManager.getModel(modelItem.getModel(stack)));
+            BakedModel model = this.modelManager.getModel(modelItem.getModel(stack));
+            cir.setReturnValue(model != null ? model : this.modelManager.getMissingModel());
         }
     }
 }

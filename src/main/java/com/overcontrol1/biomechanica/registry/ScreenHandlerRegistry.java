@@ -1,8 +1,8 @@
-package com.overcontrol1.biomechanica.client.registry;
+package com.overcontrol1.biomechanica.registry;
 
 import com.overcontrol1.biomechanica.Biomechanica;
-import com.overcontrol1.biomechanica.client.screen.BiotechCoreInserterScreenHandler;
-import com.overcontrol1.biomechanica.client.screen.BiotechCraftingStationScreenHandler;
+import com.overcontrol1.biomechanica.screen.BiotechCoreInserterScreenHandler;
+import com.overcontrol1.biomechanica.screen.BiotechCraftingStationScreenHandler;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.resource.featuretoggle.FeatureFlags;

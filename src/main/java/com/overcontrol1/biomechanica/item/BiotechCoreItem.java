@@ -9,6 +9,7 @@ import com.overcontrol1.biomechanica.registry.custom.CustomRegistries;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
@@ -16,9 +17,10 @@ import net.minecraft.world.World;
 
 import java.util.Objects;
 
-public class BiotechExoskeletonItem extends Item implements DynamicModelItem {
-    private static final String BASE_PATH = "item/exoskeleton/";
-    public BiotechExoskeletonItem(Settings settings) {
+public class BiotechCoreItem extends Item implements DynamicModelItem {
+    private static final String BASE_PATH = "item/core/";
+
+    public BiotechCoreItem(Settings settings) {
         super(settings);
     }
 
@@ -28,11 +30,25 @@ public class BiotechExoskeletonItem extends Item implements DynamicModelItem {
             return super.use(world, user, hand);
         }
 
-        ItemStack stack = user.getMainHandStack();
-
-        BiomechanicaItemComponents.CORE_TYPE.get(stack).setCoreType(CoreTypeRegistry.IGNIS);
+        BiomechanicaItemComponents.CORE_TYPE.get(user.getStackInHand(hand)).setCoreType(CoreTypeRegistry.CUSTOS);
 
         return super.use(world, user, hand);
+    }
+
+    @Override
+    public Text getName(ItemStack stack) {
+        CoreType coreType = BiomechanicaItemComponents.CORE_TYPE.get(stack).getCoreType();
+        if (coreType == null) {
+            return super.getName(stack);
+        }
+
+        Identifier coreTypeId = CustomRegistries.CORE_TYPES.getId(coreType);
+
+        if (coreTypeId == null) {
+            throw new IllegalStateException("Unregistered CoreType: " + coreType + ", Translation Key: " + coreType.translationKey());
+        }
+
+        return Text.translatable(coreTypeId.toTranslationKey("coreType")).append(" ").append(super.getName());
     }
 
     @Override

@@ -15,8 +15,6 @@ import net.minecraft.data.client.TextureMap;
 import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 
-import java.util.Objects;
-
 public class ModModelProvider extends FabricModelProvider {
     public ModModelProvider(FabricDataOutput output) {
         super(output);
@@ -33,6 +31,18 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.register(ItemRegistry.BIOTECH_ANIMATABLE, Items.BARRIER, Models.GENERATED);
 
         generateExoskeletonModels(itemModelGenerator);
+        generateCoreModels(itemModelGenerator);
+    }
+
+    private void generateCoreModels(ItemModelGenerator generator) {
+        Identifier defaultModelId = new Identifier(Biomechanica.MOD_ID, "item/core/default");
+        Models.GENERATED.upload(defaultModelId, TextureMap.layer0(defaultModelId), generator.writer);
+
+        for (CoreType coreType : CustomRegistries.CORE_TYPES.stream().toList()) {
+            Identifier modelId = new Identifier(Biomechanica.MOD_ID, "item/core/" + coreType.biomeId());
+
+            Models.GENERATED.upload(modelId, TextureMap.layer0(modelId), generator.writer);
+        }
     }
 
     private static void generateExoskeletonModels(ItemModelGenerator generator) {

@@ -1,4 +1,4 @@
-package com.overcontrol1.biomechanica.client.slot;
+package com.overcontrol1.biomechanica.screen.slot;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;

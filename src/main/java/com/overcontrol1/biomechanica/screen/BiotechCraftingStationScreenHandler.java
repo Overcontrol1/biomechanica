@@ -1,11 +1,11 @@
-package com.overcontrol1.biomechanica.client.screen;
+package com.overcontrol1.biomechanica.screen;
 
 import com.overcontrol1.biomechanica.block.entity.BiotechCraftingStationBlockEntity;
-import com.overcontrol1.biomechanica.client.registry.ScreenHandlerRegistry;
-import com.overcontrol1.biomechanica.client.slot.HandlerAttachedCraftingResultSlot;
+import com.overcontrol1.biomechanica.client.util.ScreenUtil;
 import com.overcontrol1.biomechanica.network.ModMessages;
-import com.overcontrol1.biomechanica.recipe.BiotechCraftingStationShapedRecipe;
 import com.overcontrol1.biomechanica.registry.RecipeRegistry;
+import com.overcontrol1.biomechanica.registry.ScreenHandlerRegistry;
+import com.overcontrol1.biomechanica.screen.slot.HandlerAttachedCraftingResultSlot;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -18,15 +18,11 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.packet.s2c.play.ScreenHandlerSlotUpdateS2CPacket;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.world.World;
-
-import java.util.Objects;
-import java.util.Optional;
 
 public class BiotechCraftingStationScreenHandler extends GenericScreenHandler {
     private CraftingResultInventory resultInventory;
@@ -77,28 +73,9 @@ public class BiotechCraftingStationScreenHandler extends GenericScreenHandler {
 
     protected static void updateResult(ScreenHandler handler, World world, PlayerEntity player,
                                        RecipeInputInventory craftingInventory, CraftingResultInventory resultInventory) {
-        if (!world.isClient) {
-            ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity) player;
-            ItemStack itemStack = ItemStack.EMPTY;
-            Optional<BiotechCraftingStationShapedRecipe> optional = Objects.requireNonNull(world.getServer()).getRecipeManager().getFirstMatch(RecipeRegistry.Types.BIOTECH_CRAFTING, craftingInventory, world);
-            if (optional.isPresent()) {
-                BiotechCraftingStationShapedRecipe craftingRecipe = optional.get();
-                if (resultInventory.shouldCraftRecipe(world, serverPlayerEntity, craftingRecipe)) {
-                    ItemStack itemStack2 = craftingRecipe.craft(craftingInventory, world.getRegistryManager());
-                    if (itemStack2.isItemEnabled(world.getEnabledFeatures())) {
-                        itemStack = itemStack2;
-                    }
-                }
-            }
-
-            ItemStack previousStack = resultInventory.getStack(0);
-            resultInventory.setStack(0, itemStack);
-            handler.setPreviousTrackedSlot(0, itemStack);
-            serverPlayerEntity.networkHandler.sendPacket(new ScreenHandlerSlotUpdateS2CPacket(handler.syncId, handler.nextRevision(), 0, itemStack));
-            if (itemStack != previousStack) {
-                ((BiotechCraftingStationScreenHandler) handler).sendCachePacket(itemStack, (BlockEntity) craftingInventory, world);
-            }
-        }
+        ScreenUtil.updateResult(handler, world, (ServerPlayerEntity) player, craftingInventory, resultInventory, RecipeRegistry.Types.BIOTECH_CRAFTING, (stack, blockEntity, world1) -> {
+            ((BiotechCraftingStationScreenHandler) handler).sendCachePacket(stack, (BlockEntity) craftingInventory, world);
+        });
     }
 
     private void sendCachePacket(ItemStack stackToCache, BlockEntity blockEntity, World world) {
