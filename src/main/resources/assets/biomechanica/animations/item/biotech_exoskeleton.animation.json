@@ -1,7 +1,7 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.back_claw.equip": {
+		"animation.biotech_exoskeleton.equip": {
 			"animation_length": 0.5,
 			"bones": {
 				"claw": {
@@ -39,7 +39,7 @@
 				}
 			}
 		},
-		"animation.back_claw.idle": {
+		"animation.biotech_exoskeleton.idle": {
 			"loop": true,
 			"animation_length": 3.125,
 			"loop_delay": "0.3",

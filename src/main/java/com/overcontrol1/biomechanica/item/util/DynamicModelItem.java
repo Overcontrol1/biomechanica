@@ -4,5 +4,5 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
 public interface DynamicModelItem {
-    Identifier getModel(ItemStack stack);
+    Identifier getDynamicModel(ItemStack stack);
 }

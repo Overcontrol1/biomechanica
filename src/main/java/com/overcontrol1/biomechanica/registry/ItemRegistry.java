@@ -17,7 +17,7 @@ public class ItemRegistry {
             new BiotechAnimatableItem(ArmorMaterials.IRON, ArmorItem.Type.CHESTPLATE,new FabricItemSettings().maxCount(1)));
 
     public static final Item BIOTECH_EXOSKELETON = registerItem("biotech_exoskeleton",
-            new BiotechExoskeletonItem(new FabricItemSettings().maxCount(1)));
+            new BiotechExoskeletonItem(ArmorMaterials.IRON, ArmorItem.Type.CHESTPLATE, new FabricItemSettings().maxCount(1)));
 
     public static final Item BIOTECH_CORE = registerItem("biotech_core",
             new BiotechCoreItem(new FabricItemSettings().maxCount(1)));

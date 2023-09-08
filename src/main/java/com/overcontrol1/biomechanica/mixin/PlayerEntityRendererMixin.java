@@ -20,6 +20,6 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
     @Inject(method = "<init>", at = @At("TAIL"))
     private void injectConstructor(EntityRendererFactory.Context ctx, boolean slim, CallbackInfo ci) {
         PlayerEntityRenderer renderer = (PlayerEntityRenderer) (Object) this;
-        this.addFeature(new BiotechFeatureRenderer<>(renderer));
+//        this.addFeature(new BiotechFeatureRenderer<>(renderer));
     }
 }

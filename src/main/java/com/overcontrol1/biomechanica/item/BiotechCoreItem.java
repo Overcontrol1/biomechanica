@@ -52,7 +52,7 @@ public class BiotechCoreItem extends Item implements DynamicModelItem {
     }
 
     @Override
-    public Identifier getModel(ItemStack stack) {
+    public Identifier getDynamicModel(ItemStack stack) {
         CoreType coreType = BiomechanicaItemComponents.CORE_TYPE.get(stack).getCoreType();
         if (coreType != null) {
             return Objects.requireNonNull(CustomRegistries.CORE_TYPES.getId(coreType)).withPath(BASE_PATH + coreType.biomeId());
