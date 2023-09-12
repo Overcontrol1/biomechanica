@@ -11,6 +11,7 @@ public class ModBlockLootTableProvider extends FabricBlockLootTableProvider {
 
     @Override
     public void generate() {
-        addDrop(BlockRegistry.BIOTECH_CRAFTING_STATION, BlockRegistry.BIOTECH_CRAFTING_STATION);
+        addDrop(BlockRegistry.BIOTECH_CRAFTING_STATION);
+        addDrop(BlockRegistry.BIOTECH_CORE_INSERTER);
     }
 }

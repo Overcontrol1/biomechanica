@@ -21,10 +21,11 @@ public class ModBlockTagProvider extends FabricTagProvider.BlockTagProvider {
     @Override
     protected void configure(RegistryWrapper.WrapperLookup arg) {
         this.setToolAndMiningLevel(BlockRegistry.BIOTECH_CRAFTING_STATION, ToolType.PICKAXE, 2);
+        this.setToolAndMiningLevel(BlockRegistry.BIOTECH_CORE_INSERTER, ToolType.PICKAXE, 2);
     }
 
     private void setToolAndMiningLevel(Block block, ToolType type, int level) {
-        this.setMineable(block, type);
+        this.setRequiredTool(block, type);
         this.setMiningLevel(block, level);
     }
 
@@ -40,7 +41,7 @@ public class ModBlockTagProvider extends FabricTagProvider.BlockTagProvider {
         this.getOrCreateTagBuilder(tagKey).add(block);
     }
 
-    private void setMineable(Block block, ToolType type) {
+    private void setRequiredTool(Block block, ToolType type) {
         this.getOrCreateTagBuilder(type.tag).add(block);
     }
 

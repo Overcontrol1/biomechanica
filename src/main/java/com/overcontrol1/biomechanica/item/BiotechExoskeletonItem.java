@@ -5,19 +5,14 @@ import com.overcontrol1.biomechanica.cca.BiomechanicaItemComponents;
 import com.overcontrol1.biomechanica.client.renderer.item.BiotechExoskeletonRenderer;
 import com.overcontrol1.biomechanica.item.util.CoreType;
 import com.overcontrol1.biomechanica.item.util.DynamicModelItem;
-import com.overcontrol1.biomechanica.registry.CoreTypeRegistry;
 import com.overcontrol1.biomechanica.registry.custom.CustomRegistries;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.client.RenderProvider;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -39,19 +34,6 @@ public class BiotechExoskeletonItem extends ArmorItem implements DynamicModelIte
 
     public BiotechExoskeletonItem(ArmorMaterial material, Type type, Settings settings) {
         super(material, type, settings);
-    }
-
-    @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        if (world.isClient || hand != Hand.MAIN_HAND) {
-            return super.use(world, user, hand);
-        }
-
-        ItemStack stack = user.getMainHandStack();
-
-        BiomechanicaItemComponents.CORE_TYPE.get(stack).setCoreType(CoreTypeRegistry.IGNIS);
-
-        return super.use(world, user, hand);
     }
 
     @Override

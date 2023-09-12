@@ -2,7 +2,6 @@ package com.overcontrol1.biomechanica.mixin;
 
 import com.overcontrol1.biomechanica.biotech.Biotech;
 import com.overcontrol1.biomechanica.biotech.BiotechHolder;
-import com.overcontrol1.biomechanica.registry.BiotechRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -28,7 +27,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements BiotechH
     @Override
     public List<Biotech> getAttachedBiotech() {
 //        return BiomechanicaComponents.ATTACHED_BIOTECH.get(this).get();
-        return List.of(BiotechRegistry.BACK_CLAW);
+        return List.of();
     }
 
     @Unique

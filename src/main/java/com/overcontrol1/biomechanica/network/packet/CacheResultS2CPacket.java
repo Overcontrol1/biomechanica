@@ -10,6 +10,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+// USUALLY SENT WHEN SCREEN CONTENTS CHANGED
 public class CacheResultS2CPacket {
 
     public static void receive(MinecraftClient minecraftClient, ClientPlayNetworkHandler clientPlayNetworkHandler,

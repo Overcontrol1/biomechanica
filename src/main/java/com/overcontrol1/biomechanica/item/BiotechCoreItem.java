@@ -2,6 +2,7 @@ package com.overcontrol1.biomechanica.item;
 
 import com.overcontrol1.biomechanica.Biomechanica;
 import com.overcontrol1.biomechanica.cca.BiomechanicaItemComponents;
+import com.overcontrol1.biomechanica.cca.component.item.ItemCoreStorageComponent;
 import com.overcontrol1.biomechanica.item.util.CoreType;
 import com.overcontrol1.biomechanica.item.util.DynamicModelItem;
 import com.overcontrol1.biomechanica.registry.CoreTypeRegistry;
@@ -30,7 +31,16 @@ public class BiotechCoreItem extends Item implements DynamicModelItem {
             return super.use(world, user, hand);
         }
 
-        BiomechanicaItemComponents.CORE_TYPE.get(user.getStackInHand(hand)).setCoreType(CoreTypeRegistry.CUSTOS);
+        ItemCoreStorageComponent component = BiomechanicaItemComponents.CORE_TYPE.get(user.getStackInHand(hand));
+
+        if (component.getCoreType() != null) {
+            int index = CustomRegistries.CORE_TYPES.getRawId(component.getCoreType());
+
+            component.setCoreType(CustomRegistries.CORE_TYPES.get((index + 1) % CustomRegistries.CORE_TYPES.size()));
+        } else {
+            component.setCoreType(CoreTypeRegistry.CUSTOS);
+        }
+
 
         return super.use(world, user, hand);
     }
