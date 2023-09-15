@@ -23,7 +23,6 @@ public class BiomechanicaDynamicModels implements SimpleSynchronousResourceReloa
     public static final BiomechanicaDynamicModels INSTANCE = new BiomechanicaDynamicModels();
     private static final Map<Identifier, BakedModel> models = new HashMap<>();
     private static final Map<DynamicModelFinder, BakedModel> finders = new HashMap<>();
-    private static BakedModel missingModel;
     @Override
     public Identifier getFabricId() {
         return FABRIC_ID;
@@ -53,7 +52,6 @@ public class BiomechanicaDynamicModels implements SimpleSynchronousResourceReloa
             modelCount.getAndIncrement();
         }
 
-        missingModel = client.getBakedModelManager().getMissingModel();
         long endTime = System.nanoTime() - startingTime;
         if (modelCount.get() > 0) {
             Biomechanica.LOGGER.info(String.format("Successfully reloaded %s models for %s %s in %.2fms.", modelCount, finders.size(),
@@ -76,7 +74,7 @@ public class BiomechanicaDynamicModels implements SimpleSynchronousResourceReloa
             }
         });
 
-        return model.get() != null ? model.get() : missingModel;
+        return model.get() != null ? model.get() : MinecraftClient.getInstance().getBakedModelManager().getMissingModel();
     }
 
     /**

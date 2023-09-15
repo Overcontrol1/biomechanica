@@ -20,6 +20,21 @@ public class CoreTypeRegistry {
     public static final CoreType SALTU = registerCoreType("saltu",
             new CoreType(TranslationUtils.getCoreTypeKey("saltu"), 0xFFFFFF, BiomeIds.JUNGLE));
 
+    public static final CoreType QUIETE = registerCoreType("quiete",
+            new CoreType(TranslationUtils.getCoreTypeKey("quiete"), 0xFFFFFF, BiomeIds.DEEP_DARK));
+
+    public static final CoreType CELER = registerCoreType("celer",
+            new CoreType(TranslationUtils.getCoreTypeKey("celer"), 0xFFFFFF, BiomeIds.OCEAN));
+
+    public static final CoreType TEMPESTAS = registerCoreType("tempestas",
+            new CoreType(TranslationUtils.getCoreTypeKey("tempestas"), 0xFFFFFF, BiomeIds.DESERT));
+
+    public static final CoreType SANCTUS = registerCoreType("sanctus",
+            new CoreType(TranslationUtils.getCoreTypeKey("sanctus"), 0xFFFFFF, BiomeIds.NETHER));
+
+    public static final CoreType SAXUM = registerCoreType("saxum",
+            new CoreType(TranslationUtils.getCoreTypeKey("saxum"), 0xFFFFFF, BiomeIds.JUNGLE));
+
     public static void register() {
     }
 

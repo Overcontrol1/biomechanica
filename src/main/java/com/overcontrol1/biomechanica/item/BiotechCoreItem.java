@@ -4,7 +4,7 @@ import com.overcontrol1.biomechanica.Biomechanica;
 import com.overcontrol1.biomechanica.cca.BiomechanicaItemComponents;
 import com.overcontrol1.biomechanica.cca.component.item.ItemCoreStorageComponent;
 import com.overcontrol1.biomechanica.item.util.CoreType;
-import com.overcontrol1.biomechanica.item.util.DynamicModelItem;
+import com.overcontrol1.biomechanica.item.additions.DynamicModelItem;
 import com.overcontrol1.biomechanica.registry.CoreTypeRegistry;
 import com.overcontrol1.biomechanica.registry.custom.CustomRegistries;
 import net.minecraft.entity.player.PlayerEntity;

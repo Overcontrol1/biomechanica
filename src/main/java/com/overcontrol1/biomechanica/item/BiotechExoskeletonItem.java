@@ -4,8 +4,10 @@ import com.overcontrol1.biomechanica.Biomechanica;
 import com.overcontrol1.biomechanica.cca.BiomechanicaItemComponents;
 import com.overcontrol1.biomechanica.client.renderer.item.BiotechExoskeletonRenderer;
 import com.overcontrol1.biomechanica.item.util.CoreType;
-import com.overcontrol1.biomechanica.item.util.DynamicModelItem;
+import com.overcontrol1.biomechanica.item.additions.DynamicModelItem;
+import com.overcontrol1.biomechanica.item.additions.MiningLevelModifyingItem;
 import com.overcontrol1.biomechanica.registry.custom.CustomRegistries;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -27,7 +29,7 @@ import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class BiotechExoskeletonItem extends ArmorItem implements DynamicModelItem, GeoItem {
+public class BiotechExoskeletonItem extends ArmorItem implements DynamicModelItem, MiningLevelModifyingItem, GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private final Supplier<Object> renderProvider = GeoItem.makeRenderer(this);
     private static final String BASE_PATH = "item/exoskeleton/";
@@ -81,5 +83,18 @@ public class BiotechExoskeletonItem extends ArmorItem implements DynamicModelIte
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return this.cache;
+    }
+
+    /* TODO
+        CHANGE BASED ON CORE TYPE, NOT ALWAYS ACTIVE
+     */
+    @Override
+    public boolean canMine(int level, ItemStack stack, LivingEntity holder) {
+        return true;
+    }
+
+    @Override
+    public float getMiningSpeedMult(BlockState state, ItemStack stack, LivingEntity holder) {
+        return 10;
     }
 }

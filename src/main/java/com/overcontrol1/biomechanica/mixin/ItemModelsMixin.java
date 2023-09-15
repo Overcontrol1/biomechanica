@@ -1,6 +1,6 @@
 package com.overcontrol1.biomechanica.mixin;
 
-import com.overcontrol1.biomechanica.item.util.DynamicModelItem;
+import com.overcontrol1.biomechanica.item.additions.DynamicModelItem;
 import net.minecraft.client.render.item.ItemModels;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.BakedModelManager;
