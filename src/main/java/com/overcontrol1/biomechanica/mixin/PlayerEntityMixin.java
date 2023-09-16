@@ -55,14 +55,14 @@ public abstract class PlayerEntityMixin extends LivingEntity implements BiotechH
     }
 
     @Inject(method = "isInvulnerableTo", at = @At("TAIL"), cancellable = true)
-    public void injectInvulnerabilities(DamageSource damageSource, CallbackInfoReturnable<Boolean> cir) {
+    public void addBiotechInvulnerabilities(DamageSource damageSource, CallbackInfoReturnable<Boolean> cir) {
         if (doesBiotechMakeInvulnerableTo(damageSource)) {
             cir.setReturnValue(true);
         }
     }
 
     @Inject(method = "canHarvest", at = @At("RETURN"), cancellable = true)
-    public void injectHarvestLevel(BlockState state, CallbackInfoReturnable<Boolean> cir) {
+    public void addEquipmentMiningLevelOverrides(BlockState state, CallbackInfoReturnable<Boolean> cir) {
         if (cir.getReturnValue()) {
             return;
         }
@@ -73,7 +73,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements BiotechH
             ItemStack stack = this.getEquippedStack(slot);
 
             if (isValidMiningModifier(stack, slot)) {
-                if (((MiningLevelModifyingItem) stack.getItem()).canMine(miningLevel, this.getMainHandStack(), this)) {
+                if (((MiningLevelModifyingItem) stack.getItem()).canMine(state, miningLevel, this.getMainHandStack(), this)) {
                     cir.setReturnValue(true);
                     return;
                 }
@@ -85,7 +85,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements BiotechH
 
     // MINING SPEED IS ADDITIVE
     @ModifyVariable(method = "getBlockBreakingSpeed", at = @At(value = "STORE"), ordinal = 0)
-    public float overrideMiningSpeed(float value, BlockState state) {
+    public float addEquipmentMiningSpeedMultipliers(float value, BlockState state) {
         float miningMult = 0;
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             ItemStack stack = this.getEquippedStack(slot);

@@ -18,7 +18,7 @@ public class Biotech {
         return new BiotechAnimationState[] {};
     }
 
-    public EquipmentSlot getBodypart() {
+    public EquipmentSlot getEquipmentSlot() {
         return EquipmentSlot.CHEST;
     }
 

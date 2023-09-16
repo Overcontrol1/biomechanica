@@ -27,11 +27,11 @@ import java.util.Map;
 public class BiotechRenderer extends GeoArmorRenderer<BiotechAnimatableItem> {
     private static final GeoModel<BiotechAnimatableItem> DEFAULT =
             new DefaultedBiotechModel<>(new Identifier(Biomechanica.MOD_ID, "biotech_default"));
-    private static final Map<Biotech, GeoModel<BiotechAnimatableItem>> MODEL_MAP = new Object2ObjectArrayMap<>();
+    private static final Map<Biotech, GeoModel<BiotechAnimatableItem>> MODELS = new Object2ObjectArrayMap<>();
     private Biotech currentTech;
 
     public static void addModel(Biotech biotech, GeoModel<BiotechAnimatableItem> model) {
-        MODEL_MAP.put(biotech, model);
+        MODELS.put(biotech, model);
     }
 
     public void setCurrentTech(Biotech tech) {
@@ -39,7 +39,7 @@ public class BiotechRenderer extends GeoArmorRenderer<BiotechAnimatableItem> {
     }
 
     public EquipmentSlot getCurrentBiotechEquipmentSlot() {
-        return this.currentTech.getBodypart();
+        return this.currentTech.getEquipmentSlot();
     }
 
     public BiotechRenderer() {
@@ -48,7 +48,7 @@ public class BiotechRenderer extends GeoArmorRenderer<BiotechAnimatableItem> {
 
     @Override
     public GeoModel<BiotechAnimatableItem> getGeoModel() {
-        return MODEL_MAP.getOrDefault(this.currentTech, DEFAULT);
+        return MODELS.getOrDefault(this.currentTech, DEFAULT);
     }
 
     @Override

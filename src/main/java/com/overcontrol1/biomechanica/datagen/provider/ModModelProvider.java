@@ -15,6 +15,9 @@ import net.minecraft.data.client.TextureMap;
 import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ModModelProvider extends FabricModelProvider {
     public ModModelProvider(FabricDataOutput output) {
         super(output);
@@ -34,11 +37,16 @@ public class ModModelProvider extends FabricModelProvider {
         generateCoreModels(itemModelGenerator);
     }
 
-    private void generateCoreModels(ItemModelGenerator generator) {
+    private static void generateCoreModels(ItemModelGenerator generator) {
         Identifier defaultModelId = new Identifier(Biomechanica.MOD_ID, "item/core/default");
         Models.GENERATED.upload(defaultModelId, TextureMap.layer0(defaultModelId), generator.writer);
 
-        for (CoreType coreType : CustomRegistries.CORE_TYPES.stream().toList()) {
+        List<String> biomeIds = new ArrayList<>();
+        for (CoreType coreType : CustomRegistries.CORE_TYPES) {
+            if (biomeIds.contains(coreType.biomeId())) {
+                continue;
+            }
+            biomeIds.add(coreType.biomeId());
             Identifier modelId = new Identifier(Biomechanica.MOD_ID, "item/core/" + coreType.biomeId());
 
             Models.GENERATED.upload(modelId, TextureMap.layer0(modelId), generator.writer);
@@ -49,7 +57,12 @@ public class ModModelProvider extends FabricModelProvider {
         Identifier defaultModelId = new Identifier(Biomechanica.MOD_ID, "item/exoskeleton/default");
         Models.GENERATED.upload(defaultModelId, TextureMap.layer0(defaultModelId), generator.writer);
 
-        for (CoreType coreType : CustomRegistries.CORE_TYPES.stream().toList()) {
+        List<String> biomeIds = new ArrayList<>();
+        for (CoreType coreType : CustomRegistries.CORE_TYPES) {
+            if (biomeIds.contains(coreType.biomeId())) {
+                continue;
+            }
+            biomeIds.add(coreType.biomeId());
             Identifier modelId = new Identifier(Biomechanica.MOD_ID, "item/exoskeleton/" + coreType.biomeId());
 
             Models.GENERATED.upload(modelId, TextureMap.layer0(modelId), generator.writer);

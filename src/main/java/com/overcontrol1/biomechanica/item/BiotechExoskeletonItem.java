@@ -89,7 +89,7 @@ public class BiotechExoskeletonItem extends ArmorItem implements DynamicModelIte
         CHANGE BASED ON CORE TYPE, NOT ALWAYS ACTIVE
      */
     @Override
-    public boolean canMine(int level, ItemStack stack, LivingEntity holder) {
+    public boolean canMine(BlockState state, int miningLevel, ItemStack stack, LivingEntity holder) {
         return true;
     }
 

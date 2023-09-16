@@ -10,7 +10,9 @@ import com.overcontrol1.biomechanica.registry.custom.CustomRegistries;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
@@ -58,7 +60,10 @@ public class BiotechCoreItem extends Item implements DynamicModelItem {
             throw new IllegalStateException("Unregistered CoreType: " + coreType + ", Translation Key: " + coreType.translationKey());
         }
 
-        return Text.translatable(coreTypeId.toTranslationKey("coreType")).append(" ").append(super.getName());
+        MutableText coreText = Text.translatable(coreTypeId.toTranslationKey("coreType"))
+                .styled(style -> style.withColor(coreType.color()));
+
+        return coreText.append(" ").append(super.getName().copy().styled(style -> style.withFormatting(Formatting.WHITE)));
     }
 
     @Override

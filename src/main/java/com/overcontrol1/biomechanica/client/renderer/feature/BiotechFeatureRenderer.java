@@ -22,10 +22,11 @@ import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.client.RenderProvider;
 
 @SuppressWarnings("unchecked")
+@Deprecated(forRemoval = true)
 @Environment(EnvType.CLIENT)
 public class BiotechFeatureRenderer<T extends LivingEntity, M extends BipedEntityModel<T>> extends FeatureRenderer<T, M> {
     private Identifier texture;
-    private static final ItemStack dummyStack = new ItemStack(ItemRegistry.BIOTECH_ANIMATABLE);
+    private static final ItemStack DUMMY_STACK = new ItemStack(ItemRegistry.BIOTECH_ANIMATABLE);
     public BiotechFeatureRenderer(FeatureRendererContext<T, M> context) {
         super(context);
     }
@@ -37,14 +38,14 @@ public class BiotechFeatureRenderer<T extends LivingEntity, M extends BipedEntit
         }
 
         BiotechRenderer renderer = (BiotechRenderer) ((RenderProvider)((GeoItem) ItemRegistry.BIOTECH_ANIMATABLE).getRenderProvider().get())
-                .getGenericArmorModel(entity, dummyStack, EquipmentSlot.CHEST, (BipedEntityModel<LivingEntity>) this.getContextModel());
+                .getGenericArmorModel(entity, DUMMY_STACK, EquipmentSlot.CHEST, (BipedEntityModel<LivingEntity>) this.getContextModel());
 
         if (renderer != null) {
             for (Biotech biotech : biotechHolder.getAttachedBiotech()) {
                 VertexConsumer vertices = vertexConsumers.getBuffer(biotech.getRenderLayer(renderer.getTextureLocation(renderer.getAnimatable()) != null ? renderer.getTextureLocation(renderer.getAnimatable()) : MissingSprite.getMissingSpriteId()));
 
                 renderer.setCurrentTech(biotech);
-                renderer.prepForRender(entity, dummyStack, biotech.getBodypart(), this.getContextModel());
+                renderer.prepForRender(entity, DUMMY_STACK, biotech.getEquipmentSlot(), this.getContextModel());
                 renderer.render(matrices, vertices, light, OverlayTexture.DEFAULT_UV, 1f, 1f, 1f, 1f);
             }
         }

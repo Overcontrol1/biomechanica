@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "biomechanica:biotech_crafting_station"
+    "biomechanica:biotech_crafting_station",
+    "biomechanica:biotech_core_inserter"
   ]
 }

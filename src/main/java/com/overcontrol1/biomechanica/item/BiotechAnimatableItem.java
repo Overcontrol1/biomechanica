@@ -60,7 +60,8 @@ public class BiotechAnimatableItem extends ArmorItem implements GeoItem {
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         super.appendTooltip(stack, world, tooltip, context);
 
-        tooltip.add(Text.literal("You are not supposed to have this").formatted(Formatting.RED));
+        tooltip.add(Text.literal("You are not supposed to have this.").formatted(Formatting.RED));
+        tooltip.add(Text.literal("It has no use.").formatted(Formatting.YELLOW));
     }
 
     @Override

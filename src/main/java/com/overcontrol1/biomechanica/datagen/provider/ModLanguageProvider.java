@@ -42,6 +42,13 @@ public class ModLanguageProvider extends FabricLanguageProvider {
         addCoreType(translationBuilder, CoreTypeRegistry.CALOR, "Calor");
         addCoreType(translationBuilder, CoreTypeRegistry.OCEANUS, "Oceanus");
         addCoreType(translationBuilder, CoreTypeRegistry.SALTU, "Saltu");
+
+        addCoreType(translationBuilder, CoreTypeRegistry.QUIETE, "Quiete");
+        addCoreType(translationBuilder, CoreTypeRegistry.CELER, "Celer");
+        addCoreType(translationBuilder, CoreTypeRegistry.TEMPESTAS, "Tempestas");
+        addCoreType(translationBuilder, CoreTypeRegistry.SANCTUS, "Sanctus");
+        addCoreType(translationBuilder, CoreTypeRegistry.SAXUM, "Saxum");
+
     }
 
     private static void addBlockEntity(TranslationBuilder builder, BlockEntityType<?> blockEntityType, String translation) {

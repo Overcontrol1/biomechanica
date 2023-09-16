@@ -18,18 +18,18 @@ public class BiotechCraftingStationScreen extends HandledScreen<BiotechCraftingS
     protected void init() {
         super.init();
 
-        backgroundWidth = 176;
-        backgroundHeight = 184;
-        titleY = -3;
-        titleX = (backgroundWidth - textRenderer.getWidth(title)) / 2;
-        playerInventoryTitleY = 81;
+        this.backgroundWidth = 176;
+        this.backgroundHeight = 184;
+        this.titleY = -3;
+        this.titleX = (this.backgroundWidth - this.textRenderer.getWidth(this.title)) / 2;
+        this.playerInventoryTitleY = 81;
     }
 
     @Override
     protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
-        int x = (width - backgroundWidth) / 2;
-        int y = (height - backgroundHeight) / 2;
-        context.drawTexture(TEXTURE, x, y, 0, 0, backgroundWidth, backgroundHeight);
+        int x = (this.width - this.backgroundWidth) / 2;
+        int y = (this.height - this.backgroundHeight) / 2;
+        context.drawTexture(TEXTURE, x, y, 0, 0, this.backgroundWidth, this.backgroundHeight);
     }
 
     @Override
