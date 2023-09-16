@@ -57,7 +57,7 @@ public class BiotechCoreItem extends Item implements DynamicModelItem {
         Identifier coreTypeId = CustomRegistries.CORE_TYPES.getId(coreType);
 
         if (coreTypeId == null) {
-            throw new IllegalStateException("Unregistered CoreType: " + coreType + ", Translation Key: " + coreType.translationKey());
+            throw new IllegalStateException("Unregistered CoreType: " + coreType);
         }
 
         MutableText coreText = Text.translatable(coreTypeId.toTranslationKey("coreType"))

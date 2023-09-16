@@ -1,4 +1,6 @@
 {
+  "biomechanica.misc.core": "Core",
+  "biomechanica.misc.empty": "Empty",
   "block.biomechanica.biotech_core_inserter": "Biotech Core Inserter",
   "block.biomechanica.biotech_crafting_station": "Biotech Crafting Station",
   "blockEntity.biomechanica.biotech_core_inserter": "Biotech Core Inserter",

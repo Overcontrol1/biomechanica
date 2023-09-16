@@ -49,10 +49,16 @@ public class ModLanguageProvider extends FabricLanguageProvider {
         addCoreType(translationBuilder, CoreTypeRegistry.SANCTUS, "Sanctus");
         addCoreType(translationBuilder, CoreTypeRegistry.SAXUM, "Saxum");
 
+        addMisc(translationBuilder, "core", "Core");
+        addMisc(translationBuilder, "empty", "Empty");
+    }
+
+    private static void addMisc(TranslationBuilder builder, String id, String translation) {
+        builder.add(Biomechanica.MOD_ID + ".misc." + id, translation);
     }
 
     private static void addBlockEntity(TranslationBuilder builder, BlockEntityType<?> blockEntityType, String translation) {
-        addTranslation(builder, "blockEntity", Registries.BLOCK_ENTITY_TYPE, blockEntityType, translation);
+        addRegistryTranslation(builder, "blockEntity", Registries.BLOCK_ENTITY_TYPE, blockEntityType, translation);
     }
 
     private static void addItemGroup(TranslationBuilder builder, String name, String translation) {
@@ -64,10 +70,10 @@ public class ModLanguageProvider extends FabricLanguageProvider {
     }
 
     private static void addCoreType(TranslationBuilder builder, CoreType type, String translation) {
-        addTranslation(builder, "coreType", CustomRegistries.CORE_TYPES, type, translation);
+        addRegistryTranslation(builder, "coreType", CustomRegistries.CORE_TYPES, type, translation);
     }
 
-    private static <T> void addTranslation(TranslationBuilder builder, String base, Registry<T> registry, T value, String translation) {
+    private static <T> void addRegistryTranslation(TranslationBuilder builder, String base, Registry<T> registry, T value, String translation) {
         Identifier id = registry.getId(value);
 
         if (id != null) {

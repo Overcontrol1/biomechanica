@@ -8,13 +8,17 @@ import com.overcontrol1.biomechanica.item.additions.DynamicModelItem;
 import com.overcontrol1.biomechanica.item.additions.MiningLevelModifyingItem;
 import com.overcontrol1.biomechanica.registry.custom.CustomRegistries;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.client.RenderProvider;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -25,6 +29,7 @@ import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -78,6 +83,22 @@ public class BiotechExoskeletonItem extends ArmorItem implements DynamicModelIte
 
             return PlayState.CONTINUE;
         }));
+    }
+
+    @Override
+    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+        CoreType coreType = BiomechanicaItemComponents.CORE_TYPE.get(stack).getCoreType();
+        Identifier coreTypeId = CustomRegistries.CORE_TYPES.getId(coreType);
+
+
+        Text coreTypeText;
+        if (coreTypeId != null) {
+            coreTypeText = Text.translatable(coreTypeId.toTranslationKey("coreType")).styled(style -> style.withColor(coreType.color()));
+        } else {
+            coreTypeText = Text.translatable("biomechanica.misc.empty", "Empty");
+        }
+
+        tooltip.add(Text.translatableWithFallback("biomechanica.misc.core", "Core").append(": ").append(coreTypeText));
     }
 
     @Override
